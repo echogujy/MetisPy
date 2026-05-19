@@ -4,7 +4,7 @@ NumPy-compatible bindings for METIS graph partitioning library.
 
 ## Overview
 
-MetisPy provides a Python interface to the METIS graph partitioning library using NumPy arrays. This library allows you to partition graphs efficiently using METIS algorithms directly from NumPy, without needing Cython or manual memory management.
+MetisPy provides a Python interface to the METIS graph partitioning library using NumPy arrays. This library allows you to partition graphs efficiently using METIS algorithms directly from NumPy. 
 
 ## Features
 
@@ -23,18 +23,28 @@ MetisPy provides a Python interface to the METIS graph partitioning library usin
 - PyBind11 >= 2.6.0
 - CMake >= 3.10
 - C compiler (GCC or Clang)
-
+- pytest [optional]
 ### Build from source
 
 ```bash
-git clone https://github.com/yourusername/MetisPy.git
+git clone https://github.com/echogujy/MetisPy
 cd MetisPy
 git submodule update --init --recursive
 
-# for arm cpu : cd third_party/GKlib && mkdir -p build && cd build && cmake -DNO_X86=1 -DCMAKE_INSTALL_PREFIX=../dist .. && make install
+# for arm cpu: cd third_party/GKlib && mkdir -p build && cd build && cmake -DNO_X86=1 -DCMAKE_INSTALL_PREFIX=../dist .. && make install
 cd third_party/GKlib && mkdir -p build && cd build && cmake -DCMAKE_INSTALL_PREFIX=../dist .. && make install
 cd ../../METIS && make config gklib_path=../GKlib/dist prefix=dist i64=1 && make install
 cd ../../
 
 pip install -e . --no-build-isolation
+```
+
+### Example and test
+
+```bash
+python test/basic_usage.py
+```
+
+```bash
+pytest test/test_metis.py
 ```
