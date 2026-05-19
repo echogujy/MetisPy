@@ -28,10 +28,10 @@ setup(
     name='metispy',
     version='0.1.0',
     author='MetisPy Contributors',
-    description='PyTorch-compatible bindings for METIS graph partitioning',
+    description='NumPy-compatible bindings for METIS graph partitioning',
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
-    url='https://github.com/yourusername/MetisPy',
+    url='https://github.com/echogujy/MetisPy',
     packages=find_packages(),
     classifiers=[
         'Development Status :: 3 - Alpha',
