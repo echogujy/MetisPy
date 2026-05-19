@@ -30,8 +30,11 @@ MetisPy provides a Python interface to the METIS graph partitioning library usin
 git clone https://github.com/yourusername/MetisPy.git
 cd MetisPy
 git submodule update --init --recursive
-cd third_party/GKlib && mkdir build && cd build && cmake -DCMAKE_INSTALL_PREFIX=../dist .. && make install
+
+# for arm cpu : cd third_party/GKlib && mkdir -p build && cd build && cmake -DNO_X86=1 -DCMAKE_INSTALL_PREFIX=../dist .. && make install
+cd third_party/GKlib && mkdir -p build && cd build && cmake -DCMAKE_INSTALL_PREFIX=../dist .. && make install
 cd ../../METIS && make config gklib_path=../GKlib/dist prefix=dist i64=1 && make install
 cd ../../
-pip install -e .
+
+pip install -e . --no-build-isolation
 ```
