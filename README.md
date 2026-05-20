@@ -12,7 +12,7 @@ MetisPy provides a Python interface to the METIS graph partitioning library usin
 - **Multiple Partitioning Methods**: Support for both K-way and Recursive partitioning
 - **Flexible Graph Representation**: Support for weighted/unweighted vertices and edges
 - **Easy Installation**: Built with PyBind11's C++ extension system
-- **Open Source**: Licensed under MIT for easy integration
+- **Easy to Use**: A simple API
 
 ## Installation
 
@@ -40,6 +40,22 @@ pip install -e . --no-build-isolation
 ```
 
 ### Example and test
+
+Just One simple API call:
+```python
+def partition_graph(
+    xadj: np.ndarray,
+    adjncy: np.ndarray,
+    nparts: int,
+    vwgt: Optional[np.ndarray] = None,
+    adjwgt: Optional[np.ndarray] = None,
+    ncon: int = 1,
+    method: str = 'kway'
+) -> np.ndarray:
+```
+
+
+Test scripts:
 
 ```bash
 python test/basic_usage.py
