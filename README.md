@@ -43,6 +43,7 @@ pip install -e . --no-build-isolation
 
 Just One simple API call:
 ```python
+from metispy import partition_graph
 def partition_graph(
     xadj: np.ndarray,
     adjncy: np.ndarray,
