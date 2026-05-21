@@ -3,7 +3,7 @@ Basic usage example for MetisPy
 """
 
 import numpy as np
-from metispy import partition_graph
+from metispy import partition_graph, node_nd, partition_mesh_nodal, partition_mesh_dual
 
 
 def example_basic_partition():
@@ -120,6 +120,53 @@ def example_multiple_partitions():
     print()
 
 
+def example_matrix_reordering():
+    """Example showing sparse matrix fill-reducing reordering"""
+    print("Example 6: Sparse matrix fill-reducing reordering (NodeND)")
+    
+    # 3-vertex line graph structure
+    xadj = np.array([0, 2, 4, 6], dtype=np.int64)
+    adjncy = np.array([1, 2, 0, 2, 0, 1], dtype=np.int64)
+    
+    perm, iperm = node_nd(xadj, adjncy)
+    
+    print(f"Permutation array (perm): {perm}")
+    print(f"Inverse permutation array (iperm): {iperm}")
+    print()
+
+
+def example_mesh_partitioning():
+    """Example showing mesh partitioning (Nodal & Dual)"""
+    print("Example 7: Mesh Partitioning")
+    
+    # Two quad elements sharing an edge (nodes 1 and 2)
+    # Element 0: Nodes 0, 1, 2, 3
+    # Element 1: Nodes 1, 4, 5, 2
+    ne = 2
+    nn = 6
+    eptr = np.array([0, 4, 8], dtype=np.int64)
+    eind = np.array([0, 1, 2, 3, 1, 4, 5, 2], dtype=np.int64)
+    
+    # 1. Nodal mesh partitioning
+    objval_nodal, epart_nodal, npart_nodal = partition_mesh_nodal(
+        ne=ne, nn=nn, eptr=eptr, eind=eind, nparts=2
+    )
+    print(f"Nodal mesh partition:")
+    print(f"  Objective value: {objval_nodal}")
+    print(f"  Element partitions: {epart_nodal}")
+    print(f"  Node partitions:    {npart_nodal}")
+    
+    # 2. Dual mesh partitioning (requiring 2 common nodes to share an edge)
+    objval_dual, epart_dual, npart_dual = partition_mesh_dual(
+        ne=ne, nn=nn, eptr=eptr, eind=eind, ncommon=2, nparts=2
+    )
+    print(f"Dual mesh partition:")
+    print(f"  Objective value: {objval_dual}")
+    print(f"  Element partitions: {epart_dual}")
+    print(f"  Node partitions:    {npart_dual}")
+    print()
+
+
 if __name__ == "__main__":
     try:
         example_basic_partition()
@@ -127,7 +174,10 @@ if __name__ == "__main__":
         example_with_edge_weights()
         example_recursive_method()
         example_multiple_partitions()
+        example_matrix_reordering()
+        example_mesh_partitioning()
         print("All examples completed successfully!")
     except Exception as e:
         print(f"Error running examples: {e}")
         print("Make sure MetisPy is properly installed.")
+
